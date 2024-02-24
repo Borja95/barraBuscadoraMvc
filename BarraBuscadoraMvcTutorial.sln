@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34407.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarraBuscadoraMvcTutorial", "BarraBuscadoraMvcTutorial\BarraBuscadoraMvcTutorial.csproj", "{352B509F-B6AD-4266-93F4-67E9C9803DDA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{352B509F-B6AD-4266-93F4-67E9C9803DDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{352B509F-B6AD-4266-93F4-67E9C9803DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{352B509F-B6AD-4266-93F4-67E9C9803DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{352B509F-B6AD-4266-93F4-67E9C9803DDA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {42C936F4-DE9E-496F-9ED3-B2DEDCB513BD}
+	EndGlobalSection
+EndGlobal

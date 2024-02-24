@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<br />
+
+
+<div class="row">
+
+    <div class="form-group" style="display: flex; justify-content: end">
+        <input class="form-control" placeholder="Buscador de Atletas" id="inputBarraBuscadora" onkeyup="buscarAtletas()"/>
+        </div>
+    </div>
+
+
+
+        <div class="row">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Atleta</th>
+                        <th>País</th>
+                        <th>Marca</th>
+                        <th>Lugar Marca</th>
+                        <th>Año Marca</th>
+                    </tr>
+                </thead>
+                <tbody id="bodyTablaAtletas">
+                </tbody>
+            </table>
+        </div>
+
+<script>
+
+    var listaAtletasCompleta = [];
+    var listaAtletasBuscar = [];
+
+    $(document).ready(() => {
+
+        mostrarAtletas();
+
+    });
+
+    function mostrarAtletas() {
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("ConsultarAtletas", "Home")',
+            success: function (data) {
+                console.log(data);
+
+                var respuesta = JSON.parse(data);
+
+                if (respuesta.Codigo == 1) {
+
+                    listaAtletasCompleta = respuesta.Data;
+                    listaAtletasBuscar = respuesta.Data;
+
+                    renderizarTabla();
+
+
+                } else {
+                    alert("Ocurrió un error al consultar los atletas en la base de datos: " + respuesta.Mensaje);
+                }
+
+
+            }, error: function () {
+                alert("Ocurrió un error en el servidor, intente de nuevo más tarde");
+            }
+        })
+
+    }
+
+
+    function renderizarTabla() {
+
+        var codigoHtml = "";
+
+        if (listaAtletasBuscar.length > 0) {
+
+            listaAtletasBuscar.forEach((atleta, index) => {
+
+                codigoHtml += `<tr>
+                    <td>${atleta.Id}</td>
+                    <td>${atleta.Nombre_Atleta}</td>
+                    <td>${atleta.Pais_Origen}</td>
+                    <td>${atleta.Marca}</td>
+                    <td>${atleta.Lugar_Marca}</td>
+                    <td>${atleta.Anio_Marca}</td>
+                </tr>`;
+
+            });
+
+        } else {
+            codigoHtml += `<tr><td colspan="6" style="text-align: center;">No existen registros en la tabla</td>
+            </tr>`
+        }
+
+        $('#bodyTablaAtletas').html(codigoHtml);
+
+    }
+
+
+    function buscarAtletas() {
+
+        var textoBarraBuscadora = $('#inputBarraBuscadora').val().trim().toLowerCase();
+
+        var busqueda = listaAtletasCompleta.filter(
+            (atleta) => {
+                if (
+                    atleta.Id.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(textoBarraBuscadora) ||
+                    atleta.Nombre_Atleta.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(textoBarraBuscadora) ||
+                    atleta.Pais_Origen.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(textoBarraBuscadora) ||
+                    atleta.Marca.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(textoBarraBuscadora) ||
+                    atleta.Lugar_Marca.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(textoBarraBuscadora) ||
+                    atleta.Anio_Marca.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(textoBarraBuscadora)
+                )
+                {
+                    return atleta;
+                }
+            }
+        );
+
+        console.log("Texto barra Buscadora: " + textoBarraBuscadora);
+
+        listaAtletasBuscar = busqueda;
+
+        renderizarTabla();
+
+    }
+
+
+</script>
